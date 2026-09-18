@@ -1,83 +1,99 @@
-import React from "react";
 import Image from "next/image";
-import pic1 from "@/assets/images/section-about-1-crypto-template.svg.png";
-import iPhone from "@/assets/images/iPhones.png";
+import { ArrowLeftRight, CandlestickChart, ShieldCheck, Timer } from "lucide-react";
 import Button from "@/app/_components/Button";
+import Glow from "@/app/_components/Glow";
+import iosShot from "@/assets/images/app/app-ios.png";
+
+const features = [
+  {
+    icon: ArrowLeftRight,
+    title: "Send & Receive",
+    text: "Move funds between wallets in seconds, with fees you can predict.",
+  },
+  {
+    icon: CandlestickChart,
+    title: "Trading Charts",
+    text: "Follow every market with live candles, depth and indicators.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "100% Secure Wallet",
+    text: "Keys stay on your device, protected by 256-bit encryption.",
+  },
+  {
+    icon: Timer,
+    title: "Real Time Trading",
+    text: "Orders execute the moment the market hits your price.",
+  },
+];
+
+const FeatureCard = ({
+  icon: Icon,
+  title,
+  text,
+}: (typeof features)[number]) => (
+  <article className="group relative overflow-hidden rounded-3xl bg-surface-2/40 p-6 ring-1 ring-white/10 transition-colors hover:ring-white/25">
+    <div
+      aria-hidden="true"
+      className="pointer-events-none absolute -right-14 -top-14 h-36 w-36 rounded-full bg-blue/20 opacity-0 blur-3xl transition-opacity duration-300 group-hover:opacity-100"
+    />
+
+    <span className="grid h-12 w-12 place-items-center rounded-2xl bg-blue text-white ring-1 ring-white/20">
+      <Icon className="h-5 w-5" aria-hidden="true" />
+    </span>
+
+    <h3 className="mb-2 mt-5 text-lg font-semibold">{title}</h3>
+    <p className="text-sm leading-relaxed text-white/70">{text}</p>
+  </article>
+);
 
 const PortfolioView = () => {
   return (
-    <section className="py-16 px-4 sm:px-6 md:px-10 lg:px-20 text-white relative overflow-hidden ">
-      <div className="flex flex-col justify-center items-center text-center mb-16 relative z-10">
-        <h1 className="font-bold text-3xl md:text-4xl lg:text-5xl mb-4">
-          Build your crypto portfolio
-        </h1>
-        <p className="text-gray-300 max-w-md md:max-w-lg">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Feugiat nulla
-          suspendisse tortor aene.
-        </p>
+    <section className="relative isolate">
+      <Glow className="-right-[15vw] top-10 h-[min(600px,110vw)] w-[min(950px,130vw)]" />
 
-        <div
-          className="absolute -right-30 top-5 -z-10 w-[700px] md:w-[950px] h-[500px] md:h-[600px] 
-          rounded-full bg-[radial-gradient(circle,rgba(0,102,255,0.4)_0%,rgba(0,0,64,0)_70%)]
-          blur-3xl pointer-events-none"
-        ></div>
-      </div>
-
-      <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div className="bg-[#031956] p-6 rounded-2xl shadow-lg">
-          <Image src={pic1} className="bg-blue rounded-md p-2 mb-4" alt="" />
-          <h3 className="font-semibold text-lg mb-2">Send & Receive</h3>
-          <p className="text-sm text-gray-300">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Feugiat
-            nulla suspendisse tortor aene.
+      <div className="container-page section">
+        <div className="mx-auto mb-12 flex max-w-2xl flex-col items-center gap-4 text-center md:mb-16">
+          <h2 className="text-3xl font-bold md:text-4xl lg:text-5xl">
+            Build your crypto portfolio
+          </h2>
+          <p className="text-body">
+            Everything you need to start trading, in one app that works on every
+            device you own.
           </p>
         </div>
 
-        <div className="sm:col-span-2 lg:col-span-1 lg:row-span-2 bg-blue flex flex-col items-center gap-4 rounded-2xl shadow-lg p-6">
-          <h3 className="font-semibold text-lg text-center">
-            iOS & ANDROID APP
-          </h3>
-          <p className="text-sm text-gray-200 text-center max-w-sm">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Feugiat
-            nulla suspendisse tortor aene.
-          </p>
-          <Image
-            src={iPhone}
-            alt="iPhone App"
-            className="w-[250px] h-auto relative top-6"
-          />
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <FeatureCard {...features[0]} />
+
+          <article className="relative flex flex-col items-center gap-4 overflow-hidden rounded-3xl bg-gradient-to-b from-blue to-[#0220a8] p-6 ring-1 ring-white/20 sm:col-span-2 lg:col-span-1 lg:row-span-2">
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute -left-10 -top-10 h-48 w-48 rounded-full bg-white/15 blur-3xl"
+            />
+
+            <h3 className="text-center text-lg font-semibold tracking-wide">
+              iOS &amp; ANDROID APP
+            </h3>
+            <p className="max-w-sm text-center text-sm text-white/80">
+              One account, perfectly in sync across mobile, tablet and desktop.
+            </p>
+
+            <Image
+              src={iosShot}
+              alt="FinanceFlow mobile app"
+              className="-mb-16 mt-auto h-auto w-[200px] max-w-full drop-shadow-[0_20px_40px_rgba(0,0,0,0.45)] sm:w-[220px]"
+            />
+          </article>
+
+          {features.slice(1).map((feature) => (
+            <FeatureCard key={feature.title} {...feature} />
+          ))}
         </div>
 
-        <div className="bg-[#031956] p-6 rounded-2xl shadow-lg">
-          <Image src={pic1} className="bg-blue rounded-md p-2 mb-4" alt="" />
-          <h3 className="font-semibold text-lg mb-2">Trading Charts</h3>
-          <p className="text-sm text-gray-300">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Feugiat
-            nulla suspendisse tortor aene.
-          </p>
+        <div className="mt-10 flex justify-center">
+          <Button content="Download App" isBlue />
         </div>
-
-        <div className="bg-[#031956] p-6 rounded-2xl shadow-lg">
-          <Image src={pic1} className="bg-blue rounded-md p-2 mb-4" alt="" />
-          <h3 className="font-semibold text-lg mb-2">100% Secure Wallet</h3>
-          <p className="text-sm text-gray-300">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Feugiat
-            nulla suspendisse tortor aene.
-          </p>
-        </div>
-
-        <div className="bg-[#031956] p-6 rounded-2xl shadow-lg">
-          <Image src={pic1} className="bg-blue rounded-md p-2 mb-4" alt="" />
-          <h3 className="font-semibold text-lg mb-2">Real Time Trading</h3>
-          <p className="text-sm text-gray-300">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Feugiat
-            nulla suspendisse tortor aene.
-          </p>
-        </div>
-      </div>
-
-      <div className="text-center mt-10">
-        <Button content="Download App" isBlue={true} />
       </div>
     </section>
   );

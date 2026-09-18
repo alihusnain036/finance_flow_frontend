@@ -1,60 +1,54 @@
-import React from "react";
-import planet from "@/assets/images/planet.png";
 import Image from "next/image";
+import planet from "@/assets/images/planet.png";
+import Glow from "@/app/_components/Glow";
+
+const blocks = [
+  {
+    title: "Our Mission",
+    paragraphs: [
+      "To make owning crypto as ordinary as owning shares: clear pricing, plain language, and tools that do not assume you trade for a living.",
+      "We measure success by how quickly a new customer can go from signing up to holding their first coin with confidence.",
+    ],
+  },
+  {
+    title: "Our Story",
+    paragraphs: [
+      "FinanceFlow started in 2014 when a handful of engineers got tired of exchanges that felt like flight simulators.",
+      "Today the same team supports millions of customers across 140 countries, and still answers support tickets every week.",
+    ],
+  },
+];
 
 const OurMission = () => {
   return (
-    <section className=" text-white px-6 py-16">
-      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-start justify-between gap-10">
-        {/* Text Content */}
-        <div className="flex-1 space-y-12">
-          {/* Our Mission */}
-          <div className="space-y-4">
-            <h2 className="text-3xl font-bold">Our Mission</h2>
-            <p className="text-white/80">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Parturient lorem purus justo, ultricies. Sollicitudin odio
-              elementum urna placerat lacus, vulputate. Non malesuada viverra et
-              ultrices cras. Tincidunt tempor, blandit augue ac feugiat.
-              Praesent arcu tempus ullamcorper quisque in. Magna fermentum,
-              lacus, fermentum arcu.
-            </p>
-            <p className="text-white/80">
-              Vulputate pellentesque proin facilisis dignissim gravida sed
-              faucibus nunc. Nunc eget pharetra, in vitae porta lacus. Elit in
-              nisl, in quis nulla tellus suscipit id. Semper velit odio cras
-              pretium tristique habitant. Elit eu penatibus congue orci turpis.
-              Enim diam id.
-            </p>
-          </div>
+    <section className="relative isolate">
+      <Glow className="right-0 top-10 h-[min(700px,110vw)] w-[min(700px,110vw)]" />
 
-          {/* Our Story */}
-          <div className="space-y-4">
-            <h2 className="text-3xl font-bold">Our Story</h2>
-            <p className="text-white/80">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Parturient lorem purus justo, ultricies. Sollicitudin odio
-              elementum urna placerat lacus, vulputate. Non malesuada viverra et
-              ultrices cras. Tincidunt tempor, blandit augue ac feugiat.
-              Praesent arcu tempus ullamcorper quisque in. Magna fermentum,
-              lacus, fermentum arcu.
-            </p>
-            <p className="text-white/80">
-              Vulputate pellentesque proin facilisis dignissim gravida sed
-              faucibus nunc. Nunc eget pharetra, in vitae porta lacus. Elit in
-              nisl, in quis nulla tellus suscipit id. Semper velit odio cras
-              pretium tristique habitant. Elit eu penatibus congue orci turpis.
-              Enim diam id.
-            </p>
-          </div>
+      <div className="container-page section grid items-center gap-12 lg:grid-cols-2">
+        <div className="flex flex-col gap-6">
+          {blocks.map((block, index) => (
+            <div
+              key={block.title}
+              className="flex flex-col gap-4 rounded-3xl bg-surface-2/40 p-6 ring-1 ring-white/10 transition-colors hover:ring-white/25 md:p-8"
+            >
+              <span className="text-xs font-semibold uppercase tracking-widest text-blue-300">
+                0{index + 1}
+              </span>
+              <h2 className="heading-section">{block.title}</h2>
+              {block.paragraphs.map((text, i) => (
+                <p key={i} className="text-body">
+                  {text}
+                </p>
+              ))}
+            </div>
+          ))}
         </div>
 
-        {/* Image Content */}
-        <div className="flex justify-center lg:justify-end flex-1">
+        <div className="flex justify-center lg:justify-end">
           <Image
             src={planet}
-            alt="Planet visual"
-            className="w-full max-w-[550px] object-contain"
+            alt="Global network illustration"
+            className="h-auto w-full max-w-[420px] object-contain drop-shadow-[0_25px_60px_rgba(3,40,238,0.45)] lg:max-w-[550px]"
           />
         </div>
       </div>

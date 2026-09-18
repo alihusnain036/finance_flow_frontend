@@ -1,92 +1,113 @@
-import React from "react";
-import laptopImg from "@/assets/images/laptop.jpeg.png";
 import Image from "next/image";
+import { ArrowUpRight } from "lucide-react";
 import Button from "@/app/_components/Button";
+import cover1 from "@/assets/images/blog/cover-1.png";
+import cover2 from "@/assets/images/blog/cover-2.png";
+import cover4 from "@/assets/images/blog/cover-4.png";
+
 const posts = [
   {
-    image: laptopImg,
-    tag: "Products",
+    image: cover1,
+    tag: "Tutorial",
     title: "The Basics about Cryptocurrency",
     description:
-      "Lorem ipsum dolor sit ametero irseo, consectetur adipiscing elit. Scelerisque viverra donec diammeo.",
+      "A plain-English introduction to how coins, wallets and exchanges actually fit together.",
     author: "Alex Turner",
     date: "August 2, 2021",
-    avatar: "https://i.pravatar.cc/40?img=12",
+    avatar: "https://i.pravatar.cc/80?img=12",
   },
   {
-    image: laptopImg,
-    tag: "Products",
-    title: "The Basics about Cryptocurrency",
+    image: cover2,
+    tag: "Tutorial",
+    title: "How to read a candlestick chart",
     description:
-      "Lorem ipsum dolor sit ametero irseo, consectetur adipiscing elit. Scelerisque viverra donec diammeo.",
-    author: "Alex Turner",
-    date: "August 2, 2021",
-    avatar: "https://i.pravatar.cc/40?img=12",
+      "Open, high, low and close: what each candle tells you, and what it does not.",
+    author: "Sophie Moore",
+    date: "August 9, 2021",
+    avatar: "https://i.pravatar.cc/80?img=45",
   },
   {
-    image: laptopImg,
-    tag: "Products",
-    title: "The Basics about Cryptocurrency",
+    image: cover4,
+    tag: "Apps",
+    title: "What's new in the mobile app",
     description:
-      "Lorem ipsum dolor sit ametero irseo, consectetur adipiscing elit. Scelerisque viverra donec diammeo.",
-    author: "Alex Turner",
-    date: "August 2, 2021",
-    avatar: "https://i.pravatar.cc/40?img=12",
+      "Home screen widgets, Face ID sign-in and a redesigned portfolio tab.",
+    author: "Marcus Bell",
+    date: "August 23, 2021",
+    avatar: "https://i.pravatar.cc/80?img=52",
   },
 ];
+
 const AllArticals = () => {
   return (
-    <div className="text-center ">
-      <div className="flex flex-col md:flex-row md:justify-between justify-start text-start md:px-31 px-5 mt-30">
-        <h1 className="font-bold text-3xl">Browse our latest news</h1>
-        <p className="w-[390px]">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Feugiat nulla
-          suspendisse tortor aene.
+    <section className="container-page section">
+      <div className="mb-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+        <h2 className="heading-section">Browse our latest news</h2>
+        <p className="text-body max-w-md">
+          Guides, product updates and market explainers from the FinanceFlow
+          team.
         </p>
       </div>
-      <div className=" py-12 px-4 flex flex-wrap justify-center gap-10">
+
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {posts.map((post, index) => (
-          <div
+          <article
             key={index}
-            className="w-[420px] h-full bg-dark-blue rounded-[20px] overflow-hidden  text-white shadow-lg"
+            className="group flex flex-col overflow-hidden rounded-3xl bg-surface-2/40 shadow-lg ring-1 ring-white/10 transition-all duration-300 hover:-translate-y-1 hover:ring-white/25"
           >
-            <Image src={post.image} alt="" className="w-full" />
-            <div className="p-5 flex flex-col justify-between gap-2 h-[calc(100%-160px)]">
-              <span className="bg-blue-600 text-xs px-3 py-2 rounded-full font-medium uppercase w-fit mb-3 relative -top-8">
+            <div className="relative overflow-hidden">
+              <Image
+                src={post.image}
+                alt=""
+                className="h-44 w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 bg-linear-to-t from-surface via-surface/20 to-transparent"
+              />
+
+              <span className="absolute left-4 top-4 rounded-full bg-blue px-3 py-1 text-[11px] font-semibold uppercase tracking-widest text-white shadow-lg">
                 {post.tag}
               </span>
+            </div>
 
-              <h3 className="text-start font-semibold leading-snug mb-2">
+            <div className="flex grow flex-col p-5">
+              <h3 className="mb-2 flex items-start justify-between gap-3 text-base font-semibold leading-snug">
                 {post.title}
+                <ArrowUpRight
+                  aria-hidden="true"
+                  className="mt-0.5 h-4 w-4 shrink-0 text-white/40 transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-blue-300"
+                />
               </h3>
 
-              <p className="text-[14px] text-start text-white/80 mb-5">
+              <p className="mb-5 grow text-[14px] text-white/70">
                 {post.description}
               </p>
 
-              <div className="border-t border-white/10 pt-4 mt-auto flex items-center gap-3">
+              <div className="mt-auto flex items-center gap-3 border-t border-white/10 pt-4">
                 <Image
                   src={post.avatar}
-                  alt={post.author}
-                  width={8}
-                  height={8}
-                  className="w-8 h-8 rounded-full object-cover"
+                  alt=""
+                  width={32}
+                  height={32}
+                  className="h-8 w-8 rounded-full object-cover ring-1 ring-white/20"
                 />
                 <div>
-                  <p className="text-sm font-semibold uppercase">
+                  <p className="text-xs font-semibold uppercase tracking-wide">
                     {post.author}
                   </p>
-                  <p className="text-[12px] text-start text-white/50">
-                    {post.date}
-                  </p>
+                  <p className="text-[12px] text-white/50">{post.date}</p>
                 </div>
               </div>
             </div>
-          </div>
+          </article>
         ))}
       </div>
-      <Button content="View All Articles" isBlue={false} />
-    </div>
+
+      <div className="mt-10 flex justify-center">
+        <Button content="View All Articles" urlPath="/blog" />
+      </div>
+    </section>
   );
 };
 

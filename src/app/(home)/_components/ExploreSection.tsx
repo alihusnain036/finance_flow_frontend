@@ -1,34 +1,33 @@
 import Image from "next/image";
-import groupPic from "@/assets/images/Iphones-half.png";
 import Button from "@/app/_components/Button";
+import pairShot from "@/assets/images/app/app-pair-trading.png";
 
 const ExploreSection = () => {
   return (
-    <div
-      className="bg-blue relative w-full 
-      flex flex-col lg:flex-row items-center justify-between
-      h-[628px] lg:h-[350px] px-6 md:px-16 py-12 gap-10 lg:gap-0 mt-24"
-    >
-      <div className="flex flex-col items-start gap-4 max-w-xl text-white text-center lg:text-left">
-        <h1 className="font-bold text-2xl lg:text-3xl w-full lg:w-[500px]">
-          Explore endless possibilities with FinanceFlow
-        </h1>
-        <p className="text-sm text-white/80 w-full lg:w-[450px]">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Feugiat nulla
-          suspendisse tortor aene.
-        </p>
-        <Button content="Download App" isBlue={false} />
-      </div>
+    <section className="mt-16 overflow-hidden bg-blue md:mt-24">
+      <div className="container-page flex flex-col items-center gap-8 pt-12 lg:flex-row lg:justify-between lg:gap-12 lg:pt-0">
+        <div className="flex max-w-xl flex-col items-start gap-4 py-0 text-left lg:py-16">
+          <h2 className="text-2xl font-bold lg:text-3xl">
+            Explore endless possibilities with FinanceFlow
+          </h2>
+          <p className="max-w-md text-sm text-white/80">
+            Join millions of people already trading on the fastest growing
+            crypto platform.
+          </p>
+          <div className="mt-2 w-full sm:w-auto">
+            <Button content="Download App" />
+          </div>
+        </div>
 
-      <div className="flex justify-center items-end">
-        <Image
-          src={groupPic}
-          alt="Phone Mockup"
-          height={360}
-          className="w-auto h-auto mb-4 lg:mb-3"
-        />
+        <div className="flex w-full justify-center self-end lg:w-auto">
+          <Image
+            src={pairShot}
+            alt="FinanceFlow app on two phones"
+            className="-mb-12 h-auto w-full max-w-[340px] object-contain md:max-w-[420px] lg:max-w-[460px]"
+          />
+        </div>
       </div>
-    </div>
+    </section>
   );
 };
 

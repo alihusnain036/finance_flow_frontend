@@ -1,6 +1,5 @@
-"use client";
-
-import React from "react";
+import Image from "next/image";
+import Link from "next/link";
 import {
   FaFacebookF,
   FaLinkedinIn,
@@ -8,120 +7,151 @@ import {
   FaApple,
   FaGooglePlay,
 } from "react-icons/fa";
-import Image from "next/image";
 import logo from "@/assets/images/logo.png";
-import { usePathname } from "next/navigation";
+import { navLinks } from "./navLinks";
 
-const content = ["Home", "About", "Pricing", "Tokens", "Blog", "Contact Us"];
+const socials = [
+  { label: "Instagram", icon: FaInstagram },
+  { label: "Facebook", icon: FaFacebookF },
+  { label: "LinkedIn", icon: FaLinkedinIn },
+];
+
+const stores = [
+  { label: "App Store", icon: FaApple },
+  { label: "Play Store", icon: FaGooglePlay },
+];
+
+const resources = [
+  { label: "Help centre", href: "/contact_us" },
+  { label: "Fees", href: "/pricing" },
+  { label: "Supported tokens", href: "/tokens" },
+  { label: "Status", href: "#" },
+];
+
+const legal = [
+  { label: "Terms", href: "#" },
+  { label: "Privacy", href: "#" },
+  { label: "Cookies", href: "#" },
+];
 
 const Footer = () => {
-  const pathname = usePathname();
-  const hideFooter =
-    pathname?.includes("not-found") || pathname?.startsWith("/auth");
-
-  if (hideFooter) return null;
-
   return (
-    <footer className="bg-[#010e43] text-white px-6 lg:px-20 py-14 w-full">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start gap-12">
-        <div className="flex-1 flex flex-col gap-8 w-full">
-          <div className="flex items-center justify-center md:justify-start  gap-2">
-            <Image src={logo} alt="Logo" height={10} width={150} />
-          </div>
-          <div className=" flex justify-center">
-            <div className="flex md:hidden gap-4">
-              <a
-                href="#"
-                className="bg-white rounded-full p-2 text-[#010e43] hover:scale-110 transition"
-              >
-                <FaInstagram className="text-sm" />
-              </a>
-              <a
-                href="#"
-                className="bg-white rounded-full p-2 text-[#010e43] hover:scale-110 transition"
-              >
-                <FaFacebookF className="text-sm" />
-              </a>
-              <a
-                href="#"
-                className="bg-white rounded-full p-2 text-[#010e43] hover:scale-110 transition"
-              >
-                <FaLinkedinIn className="text-sm" />
-              </a>
-            </div>
-          </div>
+    <footer className="mt-auto border-t border-white/10 bg-surface/80">
+      <div className="container-page py-14 md:py-16">
+        <div className="grid gap-10 lg:grid-cols-12">
+          {/* Brand */}
+          <div className="flex flex-col items-start gap-5 lg:col-span-4">
+            <Link href="/" aria-label="FinanceFlow home">
+              <Image
+                src={logo}
+                alt="FinanceFlow"
+                width={150}
+                height={30}
+                className="h-auto w-[150px]"
+              />
+            </Link>
 
-          <div>
-            <h4 className="uppercase text-sm font-semibold mb-2">Menu</h4>
-            <div className="w-[365px] md:w-[250px] text-slate-600 border mt-2 mb-5"></div>
-            <div className="grid grid-cols-2 gap-y-2 text-white/80 text-sm max-w-[250px]">
-              {content.map((item) => (
-                <a
-                  href="#"
-                  key={item}
-                  className="relative w-fit cursor-pointer transition-colors duration-300
-                    after:content-[''] after:absolute after:w-0 after:h-0.5 after:bg-white 
-                    after:left-0 after:-bottom-1 hover:after:w-full after:transition-all after:duration-300"
-                >
-                  {item.toUpperCase()}
-                </a>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        <div className="flex-1 w-full flex flex-col gap-6 items-start md:items-end">
-          <div className="md:flex hidden gap-4">
-            <a
-              href="#"
-              className="bg-white rounded-full p-2 text-[#010e43] hover:scale-110 transition"
-            >
-              <FaInstagram className="text-sm" />
-            </a>
-            <a
-              href="#"
-              className="bg-white rounded-full p-2 text-[#010e43] hover:scale-110 transition"
-            >
-              <FaFacebookF className="text-sm" />
-            </a>
-            <a
-              href="#"
-              className="bg-white rounded-full p-2 text-[#010e43] hover:scale-110 transition"
-            >
-              <FaLinkedinIn className="text-sm" />
-            </a>
-          </div>
-
-          <div className="bg-[#0c1e6c] rounded-2xl px-6 py-6 w-full max-w-sm text-white">
-            <h5 className="uppercase text-sm font-semibold mb-2">
-              Download Our Application
-            </h5>
-            <p className="text-white/70 text-sm leading-relaxed mb-4">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
-              sed nulla integer
+            <p className="max-w-xs text-sm leading-relaxed text-white/60">
+              Buy, trade and hold 350+ cryptocurrencies, with fees published up
+              front and support from real people.
             </p>
-            <div className="flex flex-col sm:flex-row gap-3">
-              <a
-                href="#"
-                className="flex items-center justify-center gap-2 bg-linear-to-r from-[#1958f6] to-[#0628dd] px-5 py-2.5 rounded-full text-sm font-medium hover:opacity-90 transition w-full"
-              >
-                <FaApple className="text-lg" />
-                APP STORE
-              </a>
-              <a
-                href="#"
-                className="flex items-center justify-center gap-2 bg-linear-to-r from-[#1958f6] to-[#0628dd] px-5 py-2.5 rounded-full text-sm font-medium hover:opacity-90 transition w-full"
-              >
-                <FaGooglePlay className="text-lg" />
-                PLAY STORE
-              </a>
+
+            <ul className="flex gap-3">
+              {socials.map(({ label, icon: Icon }) => (
+                <li key={label}>
+                  <a
+                    href="#"
+                    aria-label={label}
+                    className="grid h-10 w-10 place-items-center rounded-full bg-white/10 text-white ring-1 ring-white/10 transition hover:bg-white hover:text-blue"
+                  >
+                    <Icon className="text-sm" />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Link columns */}
+          <nav className="lg:col-span-2">
+            <h4 className="text-xs font-semibold uppercase tracking-widest text-white/40">
+              Menu
+            </h4>
+            <ul className="mt-4 flex flex-col gap-3 text-sm text-white/70">
+              {navLinks.map(({ label, href }) => (
+                <li key={href}>
+                  <Link
+                    href={href}
+                    className="transition-colors hover:text-white"
+                  >
+                    {label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          <nav className="lg:col-span-2">
+            <h4 className="text-xs font-semibold uppercase tracking-widest text-white/40">
+              Resources
+            </h4>
+            <ul className="mt-4 flex flex-col gap-3 text-sm text-white/70">
+              {resources.map(({ label, href }) => (
+                <li key={label}>
+                  <Link
+                    href={href}
+                    className="transition-colors hover:text-white"
+                  >
+                    {label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          {/* App download */}
+          <div className="lg:col-span-4">
+            <div className="rounded-3xl bg-surface-2/40 p-6 ring-1 ring-white/10">
+              <h5 className="text-sm font-semibold uppercase tracking-widest text-white/60">
+                Get the app
+              </h5>
+              <p className="mt-3 text-sm leading-relaxed text-white/70">
+                Trade, track and grow your portfolio from your phone.
+              </p>
+
+              <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+                {stores.map(({ label, icon: Icon }) => (
+                  <a
+                    key={label}
+                    href="#"
+                    className="flex w-full items-center justify-center gap-2 rounded-full bg-blue px-5 py-2.5 text-sm font-medium transition hover:bg-[#031FB4]"
+                  >
+                    <Icon className="text-lg" />
+                    {label}
+                  </a>
+                ))}
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div className="mt-10 border-t border-white/10 pt-6 text-sm text-white/60 text-center md:text-left">
-        All rights reserved
+        <div className="mt-12 flex flex-col gap-4 border-t border-white/10 pt-6 text-sm text-white/50 md:flex-row md:items-center md:justify-between">
+          <p>
+            &copy; {new Date().getFullYear()} FinanceFlow. All rights reserved.
+          </p>
+
+          <ul className="flex flex-wrap gap-6">
+            {legal.map(({ label, href }) => (
+              <li key={label}>
+                <Link
+                  href={href}
+                  className="transition-colors hover:text-white"
+                >
+                  {label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </footer>
   );
