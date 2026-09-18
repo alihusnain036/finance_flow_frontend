@@ -1,80 +1,57 @@
-import React from "react";
 import Image from "next/image";
 
-import avatar1 from "@/assets/images/Rectangle 2.png";
-import avatar2 from "@/assets/images/Rectangle 2.png";
-import avatar3 from "@/assets/images/Rectangle 2.png";
 const teamMembers = [
-  {
-    name: "John Carter",
-    title: "CEO & Co-Founder",
-    image: avatar1,
-    highlighted: true,
-  },
-  {
-    name: "Sophie Moore",
-    title: "Community Lead",
-    image: avatar2,
-    highlighted: false,
-  },
-  {
-    name: "Alex Turner",
-    title: "Operations",
-    image: avatar3,
-    highlighted: false,
-  },
-  {
-    name: "Alex Turner",
-    title: "Operations",
-    image: avatar3,
-    highlighted: false,
-  },
-  {
-    name: "Alex Turner",
-    title: "Operations",
-    image: avatar3,
-    highlighted: false,
-  },
+  { name: "John Carter", title: "CEO & Co-Founder", photo: 12, highlighted: true },
+  { name: "Sophie Moore", title: "Community Lead", photo: 45, highlighted: false },
+  { name: "Alex Turner", title: "Operations", photo: 33, highlighted: false },
+  { name: "Priya Nair", title: "Head of Engineering", photo: 29, highlighted: false },
+  { name: "Marcus Bell", title: "Customer Support", photo: 52, highlighted: false },
 ];
 
 const OurTeam = () => {
   return (
-    <section className=" text-white py-20 px-6">
-      <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col lg:flex-row justify-between items-start mb-12">
-          <h2 className="text-3xl font-bold">Our Team</h2>
-          <p className="max-w-md text-white/70 text-sm mt-4 lg:mt-0">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Parturient
-            lorem purus justo, ultricies.
-          </p>
-        </div>
-
-        <div className="flex flex-wrap justify-center lg:justify-start gap-4">
-          {teamMembers.map((member, index) => (
-            <div
-              key={index}
-              className={`w-60 bg-[#060d3b] rounded-2xl overflow-hidden text-white text-center pb-4 ${
-                member.highlighted
-                  ? "border-2 border-blue-500 shadow-[0_0_0_4px] shadow-blue-700"
-                  : "bg-[#091250]"
-              }`}
-            >
-              <Image
-                src={member.image}
-                alt={member.name}
-                className="w-full p-2 h-[300px] object-cover"
-              />
-
-              <div className="mt-4 ms-4 text-start">
-                <h3 className="font-semibold text-[14px]">
-                  {member.name.toUpperCase()}
-                </h3>
-                <p className="text-[12px] text-white/60">{member.title}</p>
-              </div>
-            </div>
-          ))}
-        </div>
+    <section className="container-page section">
+      <div className="mb-12 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+        <h2 className="heading-section">Our Team</h2>
+        <p className="text-body max-w-md">
+          The people behind the product, spread across six countries and one
+          very busy support channel.
+        </p>
       </div>
+
+      <ul className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
+        {teamMembers.map((member) => (
+          <li
+            key={member.name}
+            className={`group overflow-hidden rounded-3xl bg-surface-2/40 transition-transform duration-300 hover:-translate-y-1 ${
+              member.highlighted
+                ? "ring-2 ring-blue"
+                : "ring-1 ring-white/10 hover:ring-white/25"
+            }`}
+          >
+            <div className="relative m-2 overflow-hidden rounded-xl">
+              <Image
+                src={`https://i.pravatar.cc/400?img=${member.photo}`}
+                alt={member.name}
+                width={400}
+                height={520}
+                className="aspect-[3/4] w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 bg-linear-to-t from-surface via-transparent to-transparent opacity-70"
+              />
+            </div>
+
+            <div className="px-4 pb-4">
+              <h3 className="text-[13px] font-semibold uppercase">
+                {member.name}
+              </h3>
+              <p className="text-[12px] text-white/60">{member.title}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
     </section>
   );
 };

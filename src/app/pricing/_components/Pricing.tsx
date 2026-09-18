@@ -1,46 +1,50 @@
-import Button from "@/app/_components/Button";
-import React from "react";
+import { Check } from "lucide-react";
 import { FaExchangeAlt, FaChartBar, FaWallet, FaClock } from "react-icons/fa";
+import Button from "@/app/_components/Button";
+import Glow from "@/app/_components/Glow";
+import PageHeader from "@/app/_components/PageHeader";
 
 const pricingPlans = [
   {
     tier: "Basic",
-    badgeColor: "bg-[#1a52e1]",
-    price: "$ 100 USD",
+    price: "$100",
+    cadence: "per month",
     description:
-      "Lorem ipsum dolor sit amet, ametor consectetur adipiscing elit. Et nibh.",
+      "For getting started with your first trades and a single wallet.",
     features: [
-      "Everything included in Basic",
-      "Trading up to $1MM per month",
+      "Trading up to $100K per month",
       "Windows & macOS App",
-      "Premium Support",
+      "Standard support",
+      "Portfolio tracking",
     ],
+    featured: false,
   },
   {
     tier: "Pro",
-    badgeColor: "bg-[#4dacff]",
-    price: "$ 100 USD",
+    price: "$100",
+    cadence: "per month",
     description:
-      "Lorem ipsum dolor sit amet, ametor consectetur adipiscing elit. Et nibh.",
+      "For active traders who need faster execution and deeper charts.",
     features: [
       "Everything included in Basic",
       "Trading up to $1MM per month",
-      "Windows & macOS App",
+      "Advanced charting tools",
       "Premium Support",
     ],
+    featured: true,
   },
   {
     tier: "Expert",
-    badgeColor: "bg-[#0379ff]",
-    price: "$ 100 USD",
-    description:
-      "Lorem ipsum dolor sit amet, ametor consectetur adipiscing elit. Et nibh.",
+    price: "$100",
+    cadence: "per month",
+    description: "For desks and treasuries that trade at volume every day.",
     features: [
-      "Everything included in Basic",
-      "Trading up to $1MM per month",
-      "Windows & macOS App",
-      "Premium Support",
+      "Everything included in Pro",
+      "Unlimited monthly trading",
+      "Dedicated account manager",
+      "API access & webhooks",
     ],
+    featured: false,
   },
 ];
 
@@ -53,57 +57,90 @@ const topFeatures = [
 
 const PricingSection = () => {
   return (
-    <section className="text-white py-20 px-4 sm:px-6 md:px-10">
-      <div className="max-w-7xl mx-auto text-center">
-        <h2 className="text-4xl text-start md:text-center font-bold mb-4">
-          Pricing
-        </h2>
-        <p className="text-white/70 text-start md:text-center mx-auto mb-12 text-sm max-w-xl ">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Feugiat nulla
-          suspendisse tortor aenean dis placerat. Scelerisque
-        </p>
+    <section className="relative isolate">
+      <Glow className="left-1/2 -top-[15vh] h-[min(900px,120vw)] w-[min(900px,120vw)] -translate-x-1/2" />
 
-        <div className="flex md:flex-wrap md:flex-row flex-col justify-between w-[94%] m-auto gap-6 mb-16">
-          {topFeatures.map((item, i) => (
-            <div key={i} className="flex items-center text-sm gap-4">
-              <div className="w-12 h-12 flex items-center justify-center rounded-xl bg-[#1a52e1] text-white text-lg">
-                {item.icon}
-              </div>
-              <p className="text-white/70">{item.label}</p>
-            </div>
-          ))}
-        </div>
+      <div className="container-page section">
+        <PageHeader
+          align="center"
+          title="Pricing"
+          description="Simple plans that scale with how much you trade. No hidden spreads, cancel whenever you like."
+        />
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4 md:px-10">
-          {pricingPlans.map((plan, index) => (
-            <div
-              key={index}
-              className="bg-[#060d3b] rounded-2xl w-full p-6 text-left flex flex-col justify-between h-full"
+        <ul className="mx-auto mb-16 mt-12 grid max-w-4xl grid-cols-2 gap-3 lg:grid-cols-4">
+          {topFeatures.map((item) => (
+            <li
+              key={item.label}
+              className="flex flex-col items-center gap-3 rounded-2xl bg-surface-2/40 px-4 py-5 text-center text-xs ring-1 ring-white/10 transition-colors hover:ring-white/25 sm:flex-row sm:text-left sm:text-sm"
             >
-              <span
-                className={`text-xs font-semibold text-white uppercase px-3 py-1 w-[100px] rounded-full tracking-wide mb-4 inline-block ${plan.badgeColor}`}
-              >
-                {plan.tier}
+              <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-blue text-base text-white">
+                {item.icon}
               </span>
+              <span className="text-white/70">{item.label}</span>
+            </li>
+          ))}
+        </ul>
 
-              <h3 className="text-2xl font-bold mb-2">{plan.price}</h3>
-              <p className="text-sm text-white/70 mb-6">{plan.description}</p>
+        <div className="grid items-start gap-6 lg:grid-cols-3">
+          {pricingPlans.map((plan) => (
+            <article
+              key={plan.tier}
+              className={`relative flex h-full flex-col rounded-3xl p-7 text-left transition-transform duration-300 md:p-8 ${
+                plan.featured
+                  ? "bg-gradient-to-b from-blue/25 to-surface-2/60 ring-2 ring-blue lg:-translate-y-4 lg:shadow-[0_25px_70px_rgba(3,40,238,0.35)]"
+                  : "bg-surface-2/40 ring-1 ring-white/10 hover:ring-white/25"
+              }`}
+            >
+              {plan.featured && (
+                <span className="absolute -top-3 left-7 rounded-full bg-blue px-3 py-1 text-[11px] font-semibold uppercase tracking-widest text-white shadow-lg">
+                  Most popular
+                </span>
+              )}
 
-              <div className="mb-6">
-                <h4 className="text-[13px] font-semibold mb-2 uppercase text-white/60">
-                  Features
-                </h4>
-                <ul className="space-y-2 text-sm text-white/80 pl-4 list-disc marker:text-blue-400">
-                  {plan.features.map((feature, i) => (
-                    <li key={i}>{feature}</li>
-                  ))}
-                </ul>
+              <h2 className="text-sm font-semibold uppercase tracking-widest text-white/60">
+                {plan.tier}
+              </h2>
+
+              <p className="mt-4 flex items-baseline gap-2">
+                <span className="text-4xl font-bold">{plan.price}</span>
+                <span className="text-sm text-white/50">{plan.cadence}</span>
+              </p>
+
+              <p className="mt-3 text-sm leading-relaxed text-white/70">
+                {plan.description}
+              </p>
+
+              <ul className="mt-6 flex flex-col gap-3 border-t border-white/10 pt-6 text-sm">
+                {plan.features.map((feature) => (
+                  <li key={feature} className="flex items-start gap-3">
+                    <span
+                      className={`mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full ${
+                        plan.featured ? "bg-blue" : "bg-white/10"
+                      }`}
+                    >
+                      <Check className="h-3 w-3" aria-hidden="true" />
+                    </span>
+                    <span className="text-white/80">{feature}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <div className="mt-auto pt-8">
+                <Button
+                  content="Contact Us"
+                  isBlue={plan.featured}
+                  fullWidth
+                  urlPath="/contact_us"
+                />
               </div>
-
-              <Button content="Contact Us" isBlue={true} width={80} />
-            </div>
+            </article>
           ))}
         </div>
+
+        <p className="mt-10 text-center text-xs text-white/50">
+          All plans include 256-bit encryption, cold storage and no withdrawal
+          fees. Prices exclude local taxes.
+        </p>
       </div>
     </section>
   );

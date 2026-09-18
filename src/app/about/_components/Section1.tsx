@@ -1,24 +1,40 @@
-import React from "react";
+import Glow from "@/app/_components/Glow";
+import PageHeader from "@/app/_components/PageHeader";
+
+const stats = [
+  { value: "2014", label: "Founded" },
+  { value: "1M+", label: "Funded accounts" },
+  { value: "140", label: "Countries served" },
+  { value: "24/7", label: "Human support" },
+];
 
 const Section1 = () => {
   return (
-    <div className="relative w-full px-4 md:px-8 py-16 flex flex-col justify-center items-start md:items-center gap-6 text-white text-start md:text-center">
-      <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold">
-        About Finance Flow
-      </h1>
+    <section className="relative isolate">
+      <Glow className="-left-[15vw] top-0 h-[min(950px,130vw)] w-[min(950px,130vw)]" />
 
-      <p className="text-sm sm:text-base leading-relaxed max-w-xl text-white/80">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Feugiat nulla
-        suspendisse tortor aenean dis placerat. Scelerisque imperdiet vitae
-        dolor non aliquam. Malesuada.
-      </p>
+      <div className="container-page py-16 md:py-24">
+        <PageHeader
+          align="center"
+          title="About Finance Flow"
+          description="We are building the simplest way to buy, trade and hold crypto, for people who would rather spend their time on everything else."
+        />
 
-      <div
-        className="absolute top-10 -left-40 w-[600px] md:w-[800px] lg:w-[950px] h-[600px] md:h-[800px] lg:h-[950px] 
-          rounded-full bg-[radial-gradient(circle,rgba(0,102,255,0.4)_0%,rgba(0,0,64,0)_70%)]
-          blur-3xl pointer-events-none -z-10"
-      ></div>
-    </div>
+        <dl className="mt-14 grid grid-cols-2 gap-4 lg:grid-cols-4">
+          {stats.map(({ value, label }) => (
+            <div
+              key={label}
+              className="rounded-3xl bg-surface-2/40 p-6 text-center ring-1 ring-white/10 transition-colors hover:ring-white/25"
+            >
+              <dt className="text-2xl font-bold sm:text-3xl">{value}</dt>
+              <dd className="mt-1 text-xs uppercase tracking-widest text-white/50">
+                {label}
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </section>
   );
 };
 

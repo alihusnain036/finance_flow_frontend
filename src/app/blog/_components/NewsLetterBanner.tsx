@@ -2,26 +2,31 @@ import { FiMail } from "react-icons/fi";
 
 export default function NewsletterBanner() {
   return (
-    <section className="bg-blue py-8 px-4">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 h-[150px]">
-        <div className="flex items-center gap-6">
-          <div className="bg-white/20 p-5 rounded-xl flex items-center justify-center text-white text-lg">
+    <section className="bg-blue py-10 md:py-12">
+      <div className="container-page flex flex-col items-start gap-8 md:flex-row md:items-center md:justify-between">
+        <div className="flex items-center gap-5">
+          <span className="grid h-14 w-14 shrink-0 place-items-center rounded-xl bg-white/20 text-lg text-white">
             <FiMail />
-          </div>
-          <p className="text-white font-bold w-[50%] text-lg sm:text-xl md:text-4xl leading-snug">
+          </span>
+          <h2 className="max-w-md text-xl font-bold leading-snug text-white sm:text-2xl md:text-3xl">
             Subscribe to our crypto news weekly newsletter!
-          </p>
+          </h2>
         </div>
 
-        <form className="flex bg-white p-1 rounded-full overflow-hidden w-full md:w-auto max-w-md">
+        <form className="flex w-full max-w-md items-center gap-2 rounded-full bg-white p-1.5">
+          <label htmlFor="newsletter-email" className="sr-only">
+            Email address
+          </label>
           <input
+            id="newsletter-email"
             type="email"
+            required
             placeholder="Enter email address"
-            className="px-4 py-3 text-sm text-black grow outline-none w-[40%]"
+            className="min-w-0 grow bg-transparent px-4 py-2.5 text-sm text-black outline-none"
           />
           <button
             type="submit"
-            className="bg-blue cursor-pointer hover:bg-[#031FB4]  rounded-4xl text-white px-5 text-sm font-semibold tracking-widest"
+            className="shrink-0 cursor-pointer rounded-full bg-blue px-5 py-2.5 text-sm font-semibold tracking-widest text-white transition hover:bg-[#031FB4]"
           >
             SUBSCRIBE
           </button>

@@ -1,21 +1,28 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { Play, Pause } from "lucide-react";
 
 export default function VideoPlayer({
   src = "/videos/sample.mp4",
-  height = 350,
+  poster,
+}: {
+  src?: string;
+  poster?: string;
 }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [hasFailed, setHasFailed] = useState(false);
 
   const handleTogglePlay = () => {
     const video = videoRef.current;
-    if (!video) return;
+    if (!video || hasFailed) return;
 
     if (video.paused) {
-      video.play();
-      setIsPlaying(true);
+      video.play().then(
+        () => setIsPlaying(true),
+        () => setHasFailed(true)
+      );
     } else {
       video.pause();
       setIsPlaying(false);
@@ -23,23 +30,51 @@ export default function VideoPlayer({
   };
 
   return (
-    <div
-      className="relative rounded-2xl w-[380px] md:w-[500px] mt-14 md:mt-0 overflow-hidden bg-blue-900 shadow-xl cursor-pointer"
-      style={{ height: `${height}px` }}
-      //   onClick={handleTogglePlay}
-    >
+    <div className="relative aspect-video w-full overflow-hidden rounded-2xl bg-dark-blue shadow-xl ring-1 ring-white/10">
+      {/* Shown until the video plays, and kept if the file is missing. */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,#123a8f_0%,#041038_55%,#010725_100%)]"
+      />
+
       <video
         ref={videoRef}
         src={src}
-        className="w-full h-full object-contain"
+        poster={poster}
+        playsInline
+        preload="metadata"
+        onError={() => setHasFailed(true)}
+        onEnded={() => setIsPlaying(false)}
+        className={`relative h-full w-full object-cover transition-opacity ${
+          hasFailed ? "opacity-0" : "opacity-100"
+        }`}
       />
 
       {!isPlaying && (
-        <div className="absolute inset-0 flex items-center justify-center bg-dark-blue pointer-events-none">
-          <div className="w-16 h-16 bg-slate-600 rounded-full flex items-center justify-center text-white text-2xl font-bold pointer-events-auto transition hover:scale-105">
-            ▶
-          </div>
-        </div>
+        <button
+          type="button"
+          onClick={handleTogglePlay}
+          aria-label="Play product tour"
+          className="group absolute inset-0 flex flex-col items-center justify-center gap-3 bg-dark-blue/40 transition hover:bg-dark-blue/25"
+        >
+          <span className="grid h-16 w-16 place-items-center rounded-full bg-white/15 text-white ring-1 ring-white/30 backdrop-blur transition group-hover:scale-105">
+            <Play className="ml-1 h-6 w-6 fill-current" />
+          </span>
+          <span className="text-sm font-medium text-white/80">
+            Watch the 2 minute tour
+          </span>
+        </button>
+      )}
+
+      {isPlaying && (
+        <button
+          type="button"
+          onClick={handleTogglePlay}
+          aria-label="Pause product tour"
+          className="absolute bottom-4 right-4 grid h-11 w-11 place-items-center rounded-full bg-black/50 text-white backdrop-blur transition hover:bg-black/70"
+        >
+          <Pause className="h-5 w-5" />
+        </button>
       )}
     </div>
   );

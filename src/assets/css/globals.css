@@ -1,20 +1,9 @@
 @import "tailwindcss";
 @import "swiper/css";
-@import "swiper/css/navigation";
 @import "swiper/css/pagination";
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
-/* === Font Face (must be before @theme) === */
-@font-face {
-  font-family: "DM Sans";
-  src: url("/src/assets/fonts/DMSans-VariableFont_opsz\,wght.ttf")
-    format("truetype");
-  font-weight: 100 900;
-  font-display: swap;
-}
-
-/* === Root colors === */
 
 /* === Tailwind Theme Variables === */
 @theme inline {
@@ -22,9 +11,12 @@
   --color-foreground: var(--foreground);
   --color-dark-blue: #010d50;
   --color-blue: #0328ee;
+  --color-surface: #00113a;
+  --color-surface-2: #031956;
 
-  /* Use only your custom font here */
-  --font-sans: "DM Sans", sans-serif;
+  /* DM Sans is loaded by next/font in app/layout.tsx */
+  --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -58,33 +50,6 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
-}
-
-/* === Dark Mode === */
-
-/* === Base Styles === */
-@layer base {
-  body {
-    @apply font-sans bg-background text-foreground;
-  }
-}
-
-/* === Components === */
-@layer components {
-  .btn {
-    @apply px-8 py-2 rounded font-semibold cursor-pointer;
-  }
-
-  .btn-primary {
-    @apply bg-yellow-600 text-white hover:bg-yellow-700;
-  }
-}
-
-/* === Utilities === */
-@layer utilities {
-  .animation-delay-200 {
-    animation-delay: 200ms;
-  }
 }
 
 :root {
@@ -156,11 +121,58 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+/* === Base Styles === */
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Decorative glows are wider than the phone viewport by design.
+     `clip` contains them without creating a scroll container,
+     so `position: sticky` on the header keeps working. */
+  html,
   body {
-    @apply bg-background text-foreground;
+    overflow-x: clip;
+  }
+
+  body {
+    @apply font-sans bg-background text-foreground antialiased;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-white/70;
+  }
+}
+
+/* === Shared layout primitives === */
+@layer components {
+  /* One container for every section, so page edges line up everywhere. */
+  .container-page {
+    @apply mx-auto w-full max-w-7xl px-5 sm:px-6 lg:px-8;
+  }
+
+  .section {
+    @apply py-16 md:py-24;
+  }
+
+  .section-tight {
+    @apply py-12 md:py-16;
+  }
+
+  /* Section heading + intro pair used across pages. */
+  .heading-section {
+    @apply text-2xl sm:text-3xl md:text-4xl font-bold leading-tight;
+  }
+
+  .text-body {
+    @apply text-sm sm:text-base leading-relaxed text-white/70;
+  }
+
+  .card-surface {
+    @apply rounded-2xl bg-surface-2/60 ring-1 ring-white/10 transition-colors hover:ring-white/25;
   }
 }

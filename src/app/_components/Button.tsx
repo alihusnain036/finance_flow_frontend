@@ -1,34 +1,37 @@
 "use client";
+
+import { useRouter } from "next/navigation";
+
 type ButtonProps = {
   content: string;
   isBlue?: boolean;
-  width?: number;
   urlPath?: string;
+  /** Stay full width at every breakpoint (mobile menu, cards). */
+  fullWidth?: boolean;
+  className?: string;
 };
-import { useRouter } from "next/navigation";
 
-const Button = ({ content, isBlue, width, urlPath }: ButtonProps) => {
+const Button = ({
+  content,
+  isBlue,
+  urlPath,
+  fullWidth,
+  className = "",
+}: ButtonProps) => {
   const router = useRouter();
 
-  const handleClick = (path: string) => {
-    try {
-      if (path !== "") {
-        router.push(path);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
   return (
     <button
-      className={`${
-        isBlue
-          ? `bg-blue hover:bg-[#031FB4]`
-          : `bg-slate-600 hover:bg-white hover:text-blue`
-      } border-none rounded-3xl ${
-        width ? `md:w-${width}` : `md:w-45 w-90`
-      } h-11 text-sm cursor-pointer  `}
-      onClick={() => handleClick(urlPath ? urlPath : "")}
+      type="button"
+      onClick={() => urlPath && router.push(urlPath)}
+      className={`inline-flex h-11 shrink-0 items-center justify-center rounded-full px-7
+        text-sm font-semibold tracking-wide transition-colors cursor-pointer
+        ${fullWidth ? "w-full" : "w-full sm:w-auto"}
+        ${
+          isBlue
+            ? "bg-blue text-white hover:bg-[#031FB4]"
+            : "bg-white/10 text-white hover:bg-white hover:text-blue"
+        } ${className}`}
     >
       {content.toLocaleUpperCase()}
     </button>
