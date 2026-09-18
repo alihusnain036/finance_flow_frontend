@@ -19,19 +19,19 @@ const faqData = [
     id: "q2",
     question: "How do I start trading crypto?",
     answer:
-      "You can start trading by creating an account on a crypto exchange, funding it, and choosing your first trade.",
+      "Create an account, verify your identity, add funds with a card or bank transfer, and place your first order. The whole process usually takes under ten minutes.",
   },
   {
     id: "q3",
     question: "Is it safe to invest in crypto?",
     answer:
-      "Crypto investing is risky. Use secure wallets and only invest what you can afford to lose.",
+      "Crypto prices move sharply, so only invest what you can afford to lose. We secure your holdings with 256-bit encryption, cold storage and optional hardware key sign-in.",
   },
   {
     id: "q4",
     question: "Can I use crypto like money?",
     answer:
-      "Yes, in many places. Businesses, platforms, and even charities now accept crypto.",
+      "Yes, in many places. Businesses, platforms, and even charities now accept crypto, and you can spend directly from your FinanceFlow balance.",
   },
   {
     id: "q5",
@@ -45,42 +45,51 @@ export default function FaqSection() {
   const [openItem, setOpenItem] = useState<string | null>(null);
 
   return (
-    <section className=" text-white py-20 px-4">
-      <div className="max-w-3xl mx-auto">
-        <h2 className="text-3xl font-bold text-center mb-10">FAQ</h2>
+    <section className="container-page section">
+      <div className="mx-auto max-w-3xl">
+        <div className="mb-10 text-center">
+          <h2 className="heading-section">Frequently asked questions</h2>
+          <p className="text-body mx-auto mt-3 max-w-lg">
+            Can&rsquo;t find what you need? Email us and we will add it to this
+            list.
+          </p>
+        </div>
 
         <Accordion
           type="single"
           collapsible
           value={openItem || ""}
           onValueChange={(val) => setOpenItem(val || null)}
-          className="space-y-4"
+          className="flex flex-col gap-3"
         >
-          {faqData.map((item) => (
-            <AccordionItem
-              key={item.id}
-              value={item.id}
-              className="border-b border-white/10 pb-2"
-            >
-              <AccordionTrigger
-                className={`
-                  flex items-center justify-between w-full text-left
-                  text-base font-medium py-4
-                  hover:no-underline
-                  [&>svg]:hidden
-                `}
+          {faqData.map((item) => {
+            const isOpen = openItem === item.id;
+            return (
+              <AccordionItem
+                key={item.id}
+                value={item.id}
+                className={`overflow-hidden rounded-2xl border-0 bg-surface-2/40 px-5 ring-1 transition-colors md:px-6 ${
+                  isOpen ? "ring-blue/50" : "ring-white/10 hover:ring-white/25"
+                }`}
               >
-                {item.question}
-                <span className="text-white text-xl font-light">
-                  {openItem === item.id ? "–" : "+"}
-                </span>
-              </AccordionTrigger>
+                <AccordionTrigger className="flex w-full items-center justify-between gap-4 py-5 text-left text-base font-medium hover:no-underline [&>svg]:hidden">
+                  {item.question}
+                  <span
+                    aria-hidden="true"
+                    className={`grid h-8 w-8 shrink-0 place-items-center rounded-full text-lg font-light transition-colors ${
+                      isOpen ? "bg-blue text-white" : "bg-white/10 text-white"
+                    }`}
+                  >
+                    {isOpen ? "–" : "+"}
+                  </span>
+                </AccordionTrigger>
 
-              <AccordionContent className="text-sm text-white/70 mt-1 pr-4">
-                {item.answer}
-              </AccordionContent>
-            </AccordionItem>
-          ))}
+                <AccordionContent className="pb-5 pr-12 text-sm leading-relaxed text-white/70">
+                  {item.answer}
+                </AccordionContent>
+              </AccordionItem>
+            );
+          })}
         </Accordion>
       </div>
     </section>

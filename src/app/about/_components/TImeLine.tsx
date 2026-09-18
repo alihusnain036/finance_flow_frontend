@@ -1,66 +1,72 @@
-import React from "react";
-
 const timelineData = [
   {
     year: "2014",
-    title: "Announcement",
+    title: "Founded",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed mattis vivamus at mattis bibendum congue cras id interdum. Risus leo et.",
+      "Four engineers started building a crypto exchange that their families could actually use.",
   },
   {
     year: "2016",
-    title: "Announcement",
+    title: "Mobile launch",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed mattis vivamus at mattis bibendum congue cras id interdum. Risus leo et.",
+      "The iOS and Android apps shipped, bringing full trading to phones for the first time.",
   },
   {
     year: "2018",
-    title: "Announcement",
+    title: "Global expansion",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed mattis vivamus at mattis bibendum congue cras id interdum. Risus leo et.",
+      "Local payment methods opened FinanceFlow up to customers in 140 countries.",
   },
   {
     year: "2022",
-    title: "Announcement",
+    title: "One million customers",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed mattis vivamus at mattis bibendum congue cras id interdum. Risus leo et.",
+      "The platform passed a million funded accounts while keeping fees the lowest in the market.",
   },
 ];
 
 const Timeline = () => {
   return (
-    <section className=" text-white py-20 px-6">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-12">
-        <div className="space-y-4">
-          <h2 className="text-3xl font-bold">Timeline</h2>
-          <p className="text-sm text-white/70 leading-relaxed">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            varius enim in eros elementum tristique. Duis cursus, mi quis
-            viverra ornare, eros dolor interdum nulla, ut commodo diam libero
-            vitae erat.
-          </p>
-        </div>
+    <section className="container-page section grid gap-12 lg:grid-cols-3">
+      <div className="flex flex-col gap-4 lg:sticky lg:top-28 lg:h-fit">
+        <h2 className="heading-section">Timeline</h2>
+        <p className="text-body">
+          A short history of how FinanceFlow grew from a side project into a
+          platform used around the world.
+        </p>
+      </div>
 
-        <div className="lg:col-span-2 flex flex-col gap-12  w-[60%] m-auto">
-          {timelineData.map((item, index) => (
-            <div key={index} className="relative pl-7">
-              <div className="absolute left-0 top-1.5 w-3 h-3 bg-white rounded-full" />
+      {/* The rail runs behind the markers and stops at the last one. */}
+      <ol className="relative flex flex-col gap-6 pl-8 lg:col-span-2">
+        <span
+          aria-hidden="true"
+          className="absolute bottom-10 left-[7px] top-4 w-px bg-gradient-to-b from-blue via-white/20 to-transparent"
+        />
 
-              <h3 className="text-base font-bold">{item.year}</h3>
-              <h4 className="text-xs uppercase tracking-wide font-semibold text-white/70 mb-2">
-                {item.title}
-              </h4>
-              <p className="text-white/70 text-sm leading-relaxed ">
+        {timelineData.map((item) => (
+          <li key={item.year} className="relative">
+            <span
+              aria-hidden="true"
+              className="absolute -left-8 top-6 grid h-4 w-4 place-items-center rounded-full bg-blue ring-4 ring-background"
+            >
+              <span className="h-1.5 w-1.5 rounded-full bg-white" />
+            </span>
+
+            <div className="rounded-3xl bg-surface-2/40 p-6 ring-1 ring-white/10 transition-colors hover:ring-white/25">
+              <div className="flex flex-wrap items-center gap-3">
+                <span className="rounded-full bg-blue/15 px-3 py-1 text-xs font-semibold tracking-widest text-blue-300 ring-1 ring-blue/30">
+                  {item.year}
+                </span>
+                <h3 className="text-base font-semibold">{item.title}</h3>
+              </div>
+
+              <p className="mt-3 text-sm leading-relaxed text-white/70">
                 {item.description}
               </p>
-
-              {index < timelineData.length - 1 && (
-                <hr className="mt-6 border-white" />
-              )}
             </div>
-          ))}
-        </div>
-      </div>
+          </li>
+        ))}
+      </ol>
     </section>
   );
 };

@@ -1,24 +1,25 @@
-import React from "react";
 import Image from "next/image";
 import bannerPic from "@/assets/images/60e4a1e7380756458de7fb94_logo-company-1-crypto-template.svg.png";
 
 const Banner = () => {
   return (
-    <div className="flex flex-col gap-6 items-center py-10 px-4 text-center">
-      {/* Title */}
-      <p className="text-white text-sm md:text-base">
+    <section className="container-page section-tight text-center">
+      <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/40">
         Finance Flow has been featured on
       </p>
 
-      {/* Logos */}
-      <div className="flex flex-wrap justify-center items-center gap-6 md:gap-24 mt-4 max-w-8xl">
-        <Image src={bannerPic} alt="Company Logo" className="w-42 h-auto" />
-        <Image src={bannerPic} alt="Company Logo" className="w-42 h-auto" />
-        <Image src={bannerPic} alt="Company Logo" className="w-42 h-auto" />
-        <Image src={bannerPic} alt="Company Logo" className="w-42 h-auto" />
-        <Image src={bannerPic} alt="Company Logo" className="w-42 h-auto" />
-      </div>
-    </div>
+      <ul className="mt-8 flex flex-wrap items-center justify-center gap-x-10 gap-y-6 md:gap-x-16">
+        {Array.from({ length: 5 }).map((_, i) => (
+          <li key={i}>
+            <Image
+              src={bannerPic}
+              alt="Featured company logo"
+              className="h-auto w-28 opacity-60 grayscale transition duration-300 hover:opacity-100 hover:grayscale-0 sm:w-32"
+            />
+          </li>
+        ))}
+      </ul>
+    </section>
   );
 };
 

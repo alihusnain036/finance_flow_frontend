@@ -1,128 +1,122 @@
 "use client";
-import React, { useState } from "react";
+
+import { useEffect, useState } from "react";
 import Image from "next/image";
-import logo from "@/assets/images/logo.png";
-import Button from "./Button";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
+import logo from "@/assets/images/logo.png";
+import Button from "./Button";
+import { navLinks } from "./navLinks";
 
 const NavBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
 
-  const content = ["Home", "About", "Pricing", "Tokens", "Blog", "Contact Us"];
+  /* Transparent over the hero, solid once the page moves. */
+  useEffect(() => {
+    const onScroll = () => setIsScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
-  const toggleMenu = () => setIsMenuOpen((prev) => !prev);
+  const hasBackdrop = isScrolled || isMenuOpen;
 
   return (
-    <div className="relative z-50">
-      {pathname === "/contact_us" && (
-        <div
-          className="absolute -top-56 left-40 w-[950px] h-[950px] rounded-full 
-          bg-[radial-gradient(circle,rgba(0,102,255,0.4)_0%,rgba(0,0,64,0)_70%)]
-          blur-3xl pointer-events-none"
-        ></div>
-      )}
-      {pathname === "/" && (
-        <div
-          className="absolute -top-130 -left-120 w-[950px] h-[950px] rounded-full 
-          bg-[radial-gradient(circle,rgba(0,102,255,0.4)_0%,rgba(0,0,64,0)_70%)]
-          blur-3xl pointer-events-none"
-        ></div>
-      )}
+    <header
+      className={`sticky top-0 z-50 transition-colors duration-300 ${
+        hasBackdrop
+          ? "border-b border-white/10 bg-background/80 shadow-lg shadow-black/20 backdrop-blur-md"
+          : "border-b border-transparent bg-transparent"
+      }`}
+    >
+      <nav className="container-page flex h-20 items-center justify-between gap-4">
+        <div className="flex items-center gap-6 xl:gap-10">
+          <Link href="/" aria-label="FinanceFlow home" className="shrink-0">
+            <Image
+              src={logo}
+              alt="FinanceFlow"
+              width={150}
+              height={30}
+              priority
+              className="h-auto w-[130px] sm:w-[150px]"
+            />
+          </Link>
 
-      <nav className="w-full px-4">
-        <div className="flex justify-around items-center flex-wrap mt-8">
-          <div className="flex items-center gap-10 md:gap-16 z-50">
-            <Image src={logo} alt="Logo" height={10} width={150} />
-            <div className="hidden md:block border h-16 border-dark-blue"></div>
-            <div className="hidden md:block">
-              <ul className="flex flex-wrap gap-6 text-sm text-center">
-                {content.map((item) => {
-                  const href =
-                    item.toLowerCase() === "home"
-                      ? "/"
-                      : item.toLowerCase() === "contact us"
-                      ? "/contact_us"
-                      : `/${item.toLowerCase()}`;
+          <span className="hidden lg:block h-10 w-px bg-white/15" />
 
-                  const isActive = pathname === href;
-
-                  return (
-                    <li
-                      key={item}
-                      className={`text-shadow-amber-300 relative cursor-pointer transition-colors duration-300
-                      after:content-[''] after:absolute after:h-0.5 after:bg-white 
-                      after:left-0 after:-bottom-1 after:transition-all after:duration-300
-                      ${
-                        isActive
-                          ? "after:w-full"
-                          : "after:w-0 hover:after:w-full"
-                      }`}
-                    >
-                      <Link href={href}>{item.toUpperCase()}</Link>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-          </div>
-
-          <div className="hidden md:block mt-4 md:mt-0">
-            <Button content="Download App" isBlue={true} />
-          </div>
-
-          <div className="md:hidden z-50">
-            <button onClick={toggleMenu} className="text-white">
-              {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
-            </button>
-          </div>
-        </div>
-
-        <div
-          className={`md:hidden transition-all duration-300 ease-in-out overflow-hidden ${
-            isMenuOpen ? "max-h-[500px] opacity-100 mt-4" : "max-h-0 opacity-0"
-          }`}
-        >
-          <ul className="flex flex-col gap-4 text-sm bg-[#030b34] p-4 rounded-xl shadow">
-            {content.map((item) => {
-              const href =
-                item.toLowerCase() === "home"
-                  ? "/"
-                  : item.toLowerCase() === "contact us"
-                  ? "/contact_us"
-                  : `/${item.toLowerCase()}`;
-
+          {/* Full nav needs ~900px of room, so it appears at lg, not md. */}
+          <ul className="hidden lg:flex items-center gap-5 xl:gap-6 text-sm">
+            {navLinks.map(({ label, href }) => {
               const isActive = pathname === href;
-
               return (
-                <li
-                  key={item}
-                  className={`relative w-fit cursor-pointer transition-colors duration-300
-                  after:content-[''] after:absolute after:h-0.5 after:bg-white 
-                  after:left-0 after:-bottom-1 after:transition-all after:duration-300
-                    ${
-                      isActive ? "after:w-full" : "after:w-0 hover:after:w-full"
-                    }`}
-                >
+                <li key={href}>
                   <Link
                     href={href}
-                    onClick={() => setIsMenuOpen(false)}
-                    className="block py-1"
+                    aria-current={isActive ? "page" : undefined}
+                    className={`relative block whitespace-nowrap py-1 transition-colors
+                      after:absolute after:left-0 after:-bottom-0.5 after:h-0.5 after:bg-white
+                      after:transition-all after:duration-300
+                      ${isActive ? "after:w-full" : "text-white/80 hover:text-white after:w-0 hover:after:w-full"}`}
                   >
-                    {item.toUpperCase()}
+                    {label.toUpperCase()}
                   </Link>
                 </li>
               );
             })}
-            <li className="mt-4">
-              <Button content="Download App" isBlue={true} />
-            </li>
           </ul>
         </div>
+
+        <div className="hidden lg:block">
+          <Button content="Download App" isBlue />
+        </div>
+
+        <button
+          type="button"
+          onClick={() => setIsMenuOpen((prev) => !prev)}
+          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+          aria-expanded={isMenuOpen}
+          aria-controls="mobile-menu"
+          className="lg:hidden grid h-11 w-11 place-items-center rounded-lg text-white transition-colors hover:bg-white/10"
+        >
+          {isMenuOpen ? <X size={26} /> : <Menu size={26} />}
+        </button>
       </nav>
-    </div>
+
+      <div
+        id="mobile-menu"
+        className={`lg:hidden overflow-hidden transition-all duration-300 ease-in-out ${
+          isMenuOpen ? "max-h-[480px] opacity-100" : "max-h-0 opacity-0"
+        }`}
+      >
+        <ul className="container-page flex flex-col gap-1 pb-6 pt-2">
+          {navLinks.map(({ label, href }) => {
+            const isActive = pathname === href;
+            return (
+              <li key={href}>
+                <Link
+                  href={href}
+                  onClick={() => setIsMenuOpen(false)}
+                  aria-current={isActive ? "page" : undefined}
+                  className={`block rounded-lg px-4 py-3 text-sm transition-colors ${
+                    isActive
+                      ? "bg-white/10 font-semibold text-white"
+                      : "text-white/80 hover:bg-white/5 hover:text-white"
+                  }`}
+                >
+                  {label.toUpperCase()}
+                </Link>
+              </li>
+            );
+          })}
+          <li className="mt-3 px-1">
+            <Button content="Download App" isBlue fullWidth />
+          </li>
+        </ul>
+      </div>
+    </header>
   );
 };
 
